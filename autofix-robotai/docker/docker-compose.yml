@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  autofix-app:
+    build: 
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: autofix_app
+    volumes:
+      - ..:/app
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - OLLAMA_HOST=http://ollama-service:11434
+      - CHROMA_DB_DIR=/app/chroma_data
+    depends_on:
+      - ollama-service
+    tty: true
+    # We keep the container running for interactive CLI usage
+    entrypoint: ["tail", "-f", "/dev/null"]
+
+  ollama-service:
+    image: ollama/ollama:latest
+    container_name: autofix_ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    # Note: To download a model automatically, you'll need to run:
+    # docker exec autofix_ollama ollama run deepseek-coder (or other model)
+
+volumes:
+  ollama_data:

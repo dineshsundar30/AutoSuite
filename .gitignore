@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+chroma_data/
+.chroma/
+log.html
+output.xml
+report.html
+.pytest_cache/
+.DS_Store
+autofix-robotai/chroma_data/

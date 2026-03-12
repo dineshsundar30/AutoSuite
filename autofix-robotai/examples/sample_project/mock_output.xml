@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.11.0 on linux)" generated="20240101 12:00:00.000" rpa="false" schemaversion="4">
+<suite id="s1" name="Login" source="/app/tests/login.robot">
+<test id="s1-t1" name="Login To System" line="5">
+<kw name="Open Android App">
+<status status="PASS" starttime="20240101 12:00:00.100" endtime="20240101 12:00:05.000"/>
+</kw>
+<kw name="Input Text Into Field">
+<arg>accessibility_id=username_field</arg>
+<arg>testuser</arg>
+<status status="PASS" starttime="20240101 12:00:05.100" endtime="20240101 12:00:06.000"/>
+</kw>
+<kw name="Input Text Into Field">
+<arg>accessibility_id=password_field</arg>
+<arg>password123</arg>
+<status status="PASS" starttime="20240101 12:00:06.100" endtime="20240101 12:00:07.000"/>
+</kw>
+<kw name="Click Button Element">
+<arg>xpath=//bad_btn_locator</arg>
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<arg>xpath=//bad_btn_locator</arg>
+<arg>timeout=5s</arg>
+<msg timestamp="20240101 12:00:12.100" level="INFO">Cannot find element 'xpath=//bad_btn_locator' after 5s</msg>
+<status status="FAIL" starttime="20240101 12:00:07.100" endtime="20240101 12:00:12.100"/>
+</kw>
+<status status="FAIL" starttime="20240101 12:00:07.100" endtime="20240101 12:00:12.100">Element locator 'xpath=//bad_btn_locator' did not match any elements after 5 seconds</status>
+</kw>
+<status status="FAIL" starttime="20240101 12:00:00.100" endtime="20240101 12:00:12.100">Element locator 'xpath=//bad_btn_locator' did not match any elements after 5 seconds</status>
+</test>
+<status status="FAIL" starttime="20240101 12:00:00.000" endtime="20240101 12:00:12.200"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+</statistics>
+<errors>
+</errors>
+</robot>
