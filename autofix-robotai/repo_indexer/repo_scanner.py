@@ -10,6 +10,8 @@ class RepoIndexer:
     """
     def __init__(self, repo_path: str, persist_directory: str = None):
         self.repo_path = os.path.abspath(repo_path)
+        if not os.path.exists(self.repo_path) or not os.path.isdir(self.repo_path):
+            raise ValueError(f"Repository path does not exist or is not a directory: {self.repo_path}")
         
         if not persist_directory:
             persist_directory = os.environ.get("CHROMA_DB_DIR", "./chroma_db")
@@ -28,10 +30,9 @@ class RepoIndexer:
 
     def _get_files_by_extension(self, extensions):
         matched_files = []
-        for root, _, files in os.walk(self.repo_path):
-            # Skip hidden directories like .git
-            if '/.' in root or '\\.' in root:
-                continue
+        for root, dirs, files in os.walk(self.repo_path):
+            # Skip hidden directories like .git safely
+            dirs[:] = [d for d in dirs if not d.startswith('.')]
                 
             for file in files:
                 if any(file.endswith(ext) for ext in extensions):

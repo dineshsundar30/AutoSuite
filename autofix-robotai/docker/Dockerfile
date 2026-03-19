@@ -2,24 +2,28 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install system dependencies for git and basic compilation
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
     build-essential \
+    curl \
     && rm -rf /var/lib/apt/lists/*
+
+# Install uv from official image
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 # Copy requirements
 COPY requirements.txt .
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install dependencies using uv
+RUN uv pip install --system -r requirements.txt
 
 # Copy application files
 COPY . .
 
-# Set python path so we can import from the project root
+# Set python path
 ENV PYTHONPATH=/app
 
-# Default command 
+# Default command
 ENTRYPOINT ["python", "-m", "cli.main"]
 CMD ["--help"]

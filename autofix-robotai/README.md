@@ -30,7 +30,17 @@ AutoFix-RobotAI is an AI-powered developer assistant that analyzes Robot Framewo
    docker compose up -d
    ```
 
-2. Inside the container, you can run the CLI:
+3. **Mounting Local Projects (Important):**
+   By default, the Docker container cannot access your host machine's files. To analyze your project, edit `docker/docker-compose.yml` to mount your projects directory under the `autofix-app` volumes list:
+   ```yaml
+       volumes:
+         - ..:/app
+         - /var/run/docker.sock:/var/run/docker.sock
+         - /path/on/your/host:/path/inside/container
+   ```
+   *Tip: Mapping the host path to the exact same path inside the container (e.g., `- /home/user/project:/home/user/project`) makes it easier to copy and paste paths into the CLI.*
+
+4. Inside the container, you can run the CLI:
    ```bash
    docker exec -it autofix_app bash
    python -m cli.main --help

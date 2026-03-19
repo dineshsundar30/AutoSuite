@@ -9,6 +9,8 @@ services:
     volumes:
       - ..:/app
       - /var/run/docker.sock:/var/run/docker.sock
+      # Mount the user's host projects directory so host paths mirror exactly inside the container
+      - /home/dinesh/DK:/home/dinesh/DK
     environment:
       - OLLAMA_HOST=http://ollama-service:11434
       - CHROMA_DB_DIR=/app/chroma_data

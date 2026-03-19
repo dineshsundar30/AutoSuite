@@ -10,3 +10,5 @@ report.html
 .pytest_cache/
 .DS_Store
 autofix-robotai/chroma_data/
+autofix-robotai/chroma_db/
+chroma_db/

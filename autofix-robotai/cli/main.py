@@ -20,9 +20,12 @@ def repo_index(path):
     print_header("Repository Indexing")
     from repo_indexer.repo_scanner import RepoIndexer
     
-    indexer = RepoIndexer(repo_path=path)
-    indexer.index_repository()
-    click.secho("\n✅ Indexing complete!", fg="green")
+    try:
+        indexer = RepoIndexer(repo_path=path)
+        indexer.index_repository()
+        click.secho("\n✅ Indexing complete!", fg="green")
+    except Exception as e:
+        click.secho(f"\n❌ Error: {str(e)}", fg="red")
 
 @cli.command()
 @click.option('--output', required=True, help='Path to the Robot Framework output.xml file')
